@@ -4,11 +4,215 @@ let selectedAccount;
 let erc20Contract;
 let isInitialized = false;
 
-export const init = async () => {
+const erc20Abi = [
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_basePrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "url",
+				"type": "string"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "funded",
+				"type": "uint256"
+			}
+		],
+		"name": "gotEther",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "refunded",
+				"type": "bool"
+			}
+		],
+		"name": "refunded",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "URL",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "bidPrice",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getContractBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "lastBidder",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "lastPrice",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "url",
+				"type": "string"
+			}
+		],
+		"name": "sendEth",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "url",
+				"type": "string"
+			}
+		],
+		"name": "sendEthTest",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	}
+];
+
+const addr = "0x7804658Bd8bEEFbdd1c79fFA687DF97A78811545";
+
+export const init = async (needWallet) => {
 	let provider = window.ethereum;
 
 	if (typeof provider !== 'undefined') {
-		provider
+    // if(needWallet){
+    //   provider
+		// 	.request({ method: 'eth_requestAccounts' })
+		// 	.then((accounts) => {
+		// 		selectedAccount = accounts[0];
+		// 		console.log(`Selected account is ${selectedAccount}`);
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log(err);
+		// 		return;
+		// 	});
+
+		// window.ethereum.on('accountsChanged', function (accounts) {
+		// 	selectedAccount = accounts[0];
+		// 	console.log(`Selected account changed to ${selectedAccount}`);
+		// });
+    // }
+	
+	}
+
+	const web3 = new Web3(provider);
+
+	const networkId = await web3.eth.net.getId();
+
+	erc20Contract = new web3.eth.Contract(
+		erc20Abi,
+		addr
+	);
+
+	isInitialized = true;
+};
+
+export const updateURLtoBC = async (url, value) => {
+
+
+
+  let provider = window.ethereum;
+
+	if (typeof provider !== 'undefined') {
+    // if(needWallet){
+      provider
 			.request({ method: 'eth_requestAccounts' })
 			.then((accounts) => {
 				selectedAccount = accounts[0];
@@ -23,183 +227,60 @@ export const init = async () => {
 			selectedAccount = accounts[0];
 			console.log(`Selected account changed to ${selectedAccount}`);
 		});
+    // }
+	
 	}
 
 	const web3 = new Web3(provider);
 
 	const networkId = await web3.eth.net.getId();
 
-	const erc20Abi = [
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_basePrice",
-          "type": "uint256"
-        },
-        {
-          "internalType": "string",
-          "name": "url",
-          "type": "string"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "funded",
-          "type": "uint256"
-        }
-      ],
-      "name": "gotEther",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "bool",
-          "name": "refunded",
-          "type": "bool"
-        }
-      ],
-      "name": "refunded",
-      "type": "event"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "string",
-          "name": "url",
-          "type": "string"
-        }
-      ],
-      "name": "sendEth",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "bidPrice",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "getBalance",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "getContractBalance",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "lastBidder",
-      "outputs": [
-        {
-          "internalType": "address payable",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "lastPrice",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "owner",
-      "outputs": [
-        {
-          "internalType": "address payable",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "URL",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    }
-  ];
-
 	erc20Contract = new web3.eth.Contract(
 		erc20Abi,
-		// Dai contract on Rinkeby
-		'0x752ceBE48C9Eb37e77D5375048D8ba0A5390aF17'
+		addr
 	);
 
-	isInitialized = true;
+
+  var decimals = 18;
+
+  // console.log(web3.utils.toBN((value*(10**decimals)).toString()));
+  // console.log("New Value ", (value*(10**decimals)));
+	return erc20Contract.methods
+		.sendEthTest(url)
+    .send({
+      from: selectedAccount, 
+      value: web3.utils.toBN((value*(10**decimals)).toString())
+     })
+		.then((res) => {
+			console.log("Success", res)
+		}).catch(err => console.log(err)) ;
 };
 
-export const getOwnBalance = async () => {
-	if (!isInitialized) {
-		await init();
-	}
 
+
+export const getURL = async () => {
+	if (!isInitialized) {
+		await init(false);
+	}
 	return erc20Contract.methods
-		.sendEth("https:youtube.com")
-		.send({
-      from: selectedAccount, 
-      value: 3 
-     })
-		.then((balance) => {
-			return balance;
+		.URL()
+    .call()
+		.then((url) => {
+			return url;
+		});
+};
+
+export const getNextPrice = async () => {
+	if (!isInitialized) {
+		await init(false);
+	}
+	return erc20Contract.methods
+		.lastPrice()
+    .call()
+		.then((lp) => {
+      lp = Web3.utils.fromWei(lp);
+      console.log(lp);
+			return lp;
 		});
 };
 

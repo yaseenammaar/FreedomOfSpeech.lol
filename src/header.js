@@ -33,6 +33,25 @@ export default function Header() {
             </Popover.Button>
           </div>
           <Popover.Group as="nav" className="hidden md:flex space-x-10">
+
+          <Popover className="relative">
+              {({ open }) => (
+                <>
+                  <Popover.Button
+                    className={classNames(
+                      open ? 'text-gray-900' : 'text-gray-500',
+                      'group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 '
+                    )}
+                  >
+                    <span>About</span>
+                    
+                  </Popover.Button>
+
+                </>
+              )}
+            </Popover>
+
+
             <Popover className="relative">
               {({ open }) => (
                 <>
