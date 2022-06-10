@@ -1,12 +1,21 @@
-import Header from "./header"; 
+// import Header from "./header"; 
 import Footer from "./footer"; 
 import { useEffect,  useState } from "react";
 import { getURL, getNextPrice,updateURLtoBC } from './Web3Client';
+import Popup from './Popup';
+import { Fragment } from 'react'
+import { Popover, Transition } from '@headlessui/react'
+import {
+  MenuIcon
+} from '@heroicons/react/outline'
+import logo from "./logo.png";
 
 export default function App() {
 	const [URL, setURL] = useState(0);
   const [inputURL, setInputURL] = useState(0);
   const [NextPrice, setNextPrice] = useState(0);
+  const [showAbout, setShowAbout] = useState(false);
+  const [showWorking, setShowWorking] = useState(false);
 
 	const fetchURL = () => {
 		getURL()
@@ -22,7 +31,7 @@ export default function App() {
   const fetchNextPrice = () => {
 		getNextPrice()
 			.then((np) => {
-				setNextPrice(np * 1.2);
+				setNextPrice(np * 1.21);
         console.log("Next Price: ", np);
 			})
 			.catch((err) => {
@@ -37,14 +46,85 @@ export default function App() {
 
   fetchNextPrice();
 
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+  }
+
   return (
     <>
-    <Header/>
+      <Popover className="relative bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
+          <div className="flex justify-start lg:w-0 lg:flex-1">
+            <a href="#">
+              <span className="sr-only">Workflow</span>
+              <img
+                className="h-16 w-auto sm:h-10"
+                src={logo}
+                alt=""
+              />
+            </a>
+          </div>
+          <div className="-mr-2 -my-2 md:hidden">
+            <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+              <span className="sr-only">Open menu</span>
+              <MenuIcon className="h-6 w-6" aria-hidden="true" />
+            </Popover.Button>
+          </div>
+          <Popover.Group as="nav" className="hidden md:flex space-x-10">
+
+          <Popover className="relative">
+              {({ open }) => (
+                <>
+                  <Popover.Button
+                    className={classNames(
+                      open ? 'text-gray-900' : 'text-gray-500',
+                      'group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 '
+                    )}
+                  >
+                    <span onClick={() => setShowAbout(!showAbout)}>About</span>
+                    
+                  </Popover.Button>
+
+                </>
+              )}
+            </Popover>
+
+
+            <Popover className="relative">
+              {({ open }) => (
+                <>
+                  <Popover.Button
+                    className={classNames(
+                      open ? 'text-gray-900' : 'text-gray-500',
+                      'group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 '
+                    )}
+                  >
+                    <span onClick={() => setShowWorking(!showWorking)}>How this works?</span>
+                    
+                  </Popover.Button>
+
+                </>
+              )}
+            </Popover>
+
+          </Popover.Group>
+        
+        </div>
+      </div>
+     
+    </Popover>
 
     {/* <p>Your balance is {URL}</p> */}
 			{/* <button onClick={() => fetchURL()}>Refresh balance</button> */}
   
 <br/>
+    <Popup visible={showAbout}/>
+
+    <Popup visible={showWorking}/>
+
+
       <section className="text-center px-3 sm:px-12 md:px-28">
               <div className="rounded-xl shadow-xl shadow-gray-300 overflow-hidden">
                 <img class="w-full" src={URL} />

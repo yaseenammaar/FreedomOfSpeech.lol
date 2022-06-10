@@ -48,16 +48,29 @@ const erc20Abi = [
 		"type": "event"
 	},
 	{
-		"inputs": [],
-		"name": "URL",
-		"outputs": [
+		"inputs": [
 			{
 				"internalType": "string",
-				"name": "",
+				"name": "url",
 				"type": "string"
 			}
 		],
-		"stateMutability": "view",
+		"name": "sendEth",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "url",
+				"type": "string"
+			}
+		],
+		"name": "sendEthTest",
+		"outputs": [],
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -139,75 +152,41 @@ const erc20Abi = [
 		"type": "function"
 	},
 	{
-		"inputs": [
+		"inputs": [],
+		"name": "URL",
+		"outputs": [
 			{
 				"internalType": "string",
-				"name": "url",
+				"name": "",
 				"type": "string"
 			}
 		],
-		"name": "sendEth",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "url",
-				"type": "string"
-			}
-		],
-		"name": "sendEthTest",
-		"outputs": [],
-		"stateMutability": "payable",
+		"stateMutability": "view",
 		"type": "function"
 	}
 ];
 
-const addr = "0x7804658Bd8bEEFbdd1c79fFA687DF97A78811545";
+const addr = "0x1269A2AB42049D75059a42B3CAa74b33184A9a48";
 
 export const init = async (needWallet) => {
-	let provider = window.ethereum;
-
-	if (typeof provider !== 'undefined') {
-    // if(needWallet){
-    //   provider
-		// 	.request({ method: 'eth_requestAccounts' })
-		// 	.then((accounts) => {
-		// 		selectedAccount = accounts[0];
-		// 		console.log(`Selected account is ${selectedAccount}`);
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log(err);
-		// 		return;
-		// 	});
-
-		// window.ethereum.on('accountsChanged', function (accounts) {
-		// 	selectedAccount = accounts[0];
-		// 	console.log(`Selected account changed to ${selectedAccount}`);
-		// });
-    // }
+	// let provider = window.ethereum;
+	// if (typeof provider !== 'undefined') {
+	// }
+	// const web3 = new Web3(provider);
+	// const networkId = await web3.eth.net.getId();
+	// const web3 = new Web3("https://ropsten.etherscan.io")
 	
-	}
+	const web3 = new Web3('https://ropsten.infura.io/v3/b23a8473dbd64275ae7528954cfc53a9');
 
-	const web3 = new Web3(provider);
-
-	const networkId = await web3.eth.net.getId();
-
+	// erc20Contract = web3.eth.contract(erc20Abi).at(addr);
 	erc20Contract = new web3.eth.Contract(
 		erc20Abi,
 		addr
 	);
-
 	isInitialized = true;
 };
 
 export const updateURLtoBC = async (url, value) => {
-
-
-
   let provider = window.ethereum;
 
 	if (typeof provider !== 'undefined') {
@@ -239,20 +218,16 @@ export const updateURLtoBC = async (url, value) => {
 		erc20Abi,
 		addr
 	);
-
-
-  var decimals = 18;
-
-  // console.log(web3.utils.toBN((value*(10**decimals)).toString()));
-  // console.log("New Value ", (value*(10**decimals)));
+  	var decimals = 18;
 	return erc20Contract.methods
-		.sendEthTest(url)
+		.sendEth(url)
     .send({
       from: selectedAccount, 
       value: web3.utils.toBN((value*(10**decimals)).toString())
      })
 		.then((res) => {
 			console.log("Success", res)
+      window.location.reload();
 		}).catch(err => console.log(err)) ;
 };
 
