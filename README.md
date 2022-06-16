@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# Freedom Of Speech
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Freedom of Speech is a simple Decentralized Web App developed with Solidity and React, currently in testing stage.
 
-## Available Scripts
+## Visit https://freedomofspeech.lol
 
-In the project directory, you can run:
+Freedom Of Speech: Giving right to speak, One person at a time!
 
-### `npm start`
+# First Law of Metaverse | Speak & Get Paid to Shut Up
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Note: It is not destined to act like a ad board, where anyone can put marketing stuff and let other people watch.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Main idea of this project is to provide freedom of speech in a different manner. As we know Elon Musk bought twitter and said he will allow freedom of speech, that's alright but there is no monetary benefit to user.
 
-### `npm test`
+![alt text](./screencapture-freedomofspeech-lol-2022-06-16-20_28_41.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+FreedomOfSpeech.lol allows one person at a time to display any URL, currently supporting PNG, JPG and GIF. (will add YouTube videos and other options later)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Working: Each time a user changes the URL the price of next bid increases by 20% and the previous user gets his capital back with fraction of profit.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+For example: If someone changed URL for 1 ETH then he/she will get 1.10 ETH or more, if his content get replaced. (We calculated, user will not be in loss if wheel keeps on running!)
 
-### `npm run eject`
+# Prerequisite
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Metamask wallet with some Ether (currently it's on Ropsten Testnet, so you can request test faucet from https://faucet.egorfine.com/)
+2. Visit https://freedomofspeech.lol
+3. Scroll down to the bottom
+4. Enter URL of any PNG/JPG/GIF
+5. Hit "Change"
+6. Wait for transaction 
+7. Done! You will get to see your content on the site.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Status
+Currently FreedomOfSpeech.lol is deployed on Ropsten Test Network, you can use Ropsten Faucet to test the app. Will deploy it to ETH mainnet soon.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Powered by Ethereum Ξ
 
-## Learn More
+![alt text](./1500x500.jpeg)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Kindly support, Gas is too expensive.
